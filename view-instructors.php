@@ -1,4 +1,4 @@
-<h1>Instructors</h1>
+<h1>Managers</h1>
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -10,13 +10,13 @@
     </thead>
     <tbody>
 <?php
-while ($instructor = $instructors->fetch_assoc()) {
+while ($manager = $managers->fetch_assoc()) {
 ?>
   <tr>
-    <td><?php echo $instructor['instructor_id'];?></td>
-    <td><?php echo $instructor['instructor_name'];?></td>
-    <td><?php echo $instructor['office_number'];?></td>
-    <td><a=href="courses-by-instructor.php?id=<?php echo $instructor['instructor_id'];?>">Courses</a></td>
+    <td><?php echo $manager['manager_id'];?></td>
+    <td><?php echo $manager['manager_name'];?></td>
+    <td><?php echo $manager['office_number'];?></td>
+    <td><a href="employees-by-manager.php?id=<?php echo $manager['manager_id'];?>">Employees</a></td>
   </tr>
 <?php      
 }
