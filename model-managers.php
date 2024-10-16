@@ -1,8 +1,8 @@
 <?php
-function selectInstructors() {
+function selectManagers() {
     try {
         $conn = get_db_connection();
-        $stmt = $conn->prepare("SELECT instructor_id, instructor_name FROM hw3.instructor");
+        $stmt = $conn->prepare("SELECT manager_id, manager_name, office_number FROM hw3.manager");
         $stmt->execute();
         $result = $stmt->get_result();
         $conn->close();
