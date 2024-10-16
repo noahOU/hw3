@@ -20,13 +20,14 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="instructors.php">Instructors</a>
+          <a class="nav-link" href="managers.php">Managers</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="courses.php">Courses</a>
+        <li class="nav-item">
+          <a class="nav-link" href="employees.php">Employees</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="instructors-with-courses.php">Instructors with Courses</a>
+        <li class="nav-item">
+          <a class="nav-link" href="managers-with-employees.php">Managers with Employees</a>
+        </li>
       </ul>
     </div>
   </div>
