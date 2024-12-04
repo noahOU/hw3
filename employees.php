@@ -7,6 +7,12 @@ include "view-header.php";
 
 // Fetch all employees
 $employees = selectEmployees();
+
+// Fetch all managers for dropdowns
+$conn = get_db_connection();
+$managers = $conn->query("SELECT manager_id, manager_name FROM hw3.manager");
+$managersData = $managers->fetch_all(MYSQLI_ASSOC); // Save as an array for reuse
+$conn->close();
 ?>
 
 <!-- Page Background Styling -->
@@ -56,6 +62,7 @@ $employees = selectEmployees();
           <th>ID</th>
           <th>Name</th>
           <th>Email</th>
+          <th>Manager</th> <!-- New Manager Column -->
           <th>Actions</th>
         </tr>
       </thead>
@@ -68,8 +75,21 @@ while ($employee = $employees->fetch_assoc()) {
     <td><?php echo $employee['employee_name']; ?></td>
     <td><?php echo $employee['email']; ?></td>
     <td>
+      <?php
+      // Fetch manager's name
+      $managerName = "No Manager Assigned";
+      foreach ($managersData as $manager) {
+          if ($manager['manager_id'] == $employee['manager_id']) {
+              $managerName = $manager['manager_name'];
+              break;
+          }
+      }
+      echo $managerName;
+      ?>
+    </td>
+    <td>
       <!-- Edit Button -->
-      <button class="btn btn-primary btn-sm" onclick="showEditModal(<?php echo $employee['employee_id']; ?>, '<?php echo $employee['employee_name']; ?>', '<?php echo $employee['email']; ?>')">Edit</button>
+      <button class="btn btn-primary btn-sm" onclick="showEditModal(<?php echo $employee['employee_id']; ?>, '<?php echo $employee['employee_name']; ?>', '<?php echo $employee['email']; ?>', '<?php echo $employee['manager_id']; ?>')">Edit</button>
       
       <!-- Delete Button -->
       <button class="btn btn-danger btn-sm" onclick="showDeleteModal(<?php echo $employee['employee_id']; ?>)">Delete</button>
@@ -107,6 +127,15 @@ while ($employee = $employees->fetch_assoc()) {
             <label for="addEmail" class="form-label">Email</label>
             <input type="email" class="form-control" name="email" id="addEmail" required>
           </div>
+          <div class="mb-3">
+            <label for="addManager" class="form-label">Manager</label>
+            <select class="form-select" name="manager_id" id="addManager" required>
+              <option value="" disabled selected>Select a Manager</option>
+              <?php foreach ($managersData as $manager) { ?>
+                <option value="<?php echo $manager['manager_id']; ?>"><?php echo $manager['manager_name']; ?></option>
+              <?php } ?>
+            </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Add</button>
@@ -135,6 +164,15 @@ while ($employee = $employees->fetch_assoc()) {
           <div class="mb-3">
             <label for="editEmail" class="form-label">Email</label>
             <input type="email" class="form-control" name="email" id="editEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="editManager" class="form-label">Manager</label>
+            <select class="form-select" name="manager_id" id="editManager" required>
+              <option value="" disabled>Select a Manager</option>
+              <?php foreach ($managersData as $manager) { ?>
+                <option value="<?php echo $manager['manager_id']; ?>"><?php echo $manager['manager_name']; ?></option>
+              <?php } ?>
+            </select>
           </div>
         </div>
         <div class="modal-footer">
@@ -175,10 +213,11 @@ function showAddModal() {
   addModal.show();
 }
 
-function showEditModal(id, name, email) {
+function showEditModal(id, name, email, managerId) {
   document.getElementById('editEmployeeId').value = id;
   document.getElementById('editName').value = name;
   document.getElementById('editEmail').value = email;
+  document.getElementById('editManager').value = managerId;
   const editModal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
   editModal.show();
 }
