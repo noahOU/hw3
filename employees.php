@@ -75,17 +75,24 @@ while ($employee = $employees->fetch_assoc()) {
     <td><?php echo $employee['employee_name']; ?></td>
     <td><?php echo $employee['email']; ?></td>
     <td>
-      <?php
-      // Fetch manager's name
-      $managerName = "No Manager Assigned";
+<td>
+  <?php
+  $manager_id = $employee['manager_id']; // Fetch the manager_id from the employee record
+  $managerName = "No Manager Assigned"; // Default message if no manager is assigned
+
+  if (!empty($manager_id)) { // Check if a manager_id is set
       foreach ($managersData as $manager) {
-          if ($manager['manager_id'] == $employee['manager_id']) {
-              $managerName = $manager['manager_name'];
+          if ($manager['manager_id'] == $manager_id) { // Match manager_id with the fetched managers
+              $managerName = $manager['manager_name']; // Get the manager's name
               break;
           }
       }
-      echo $managerName;
-      ?>
+  }
+
+  echo $managerName; // Display the manager's name or default message
+  ?>
+</td>
+
     </td>
     <td>
       <!-- Edit Button -->
