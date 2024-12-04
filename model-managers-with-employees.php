@@ -16,9 +16,12 @@ function selectManagersWithEmployees() {
 function selectEmployeesByManager($manager_id) {
     try {
         $conn = get_db_connection();
-        $stmt = $conn->prepare("SELECT e.employee_id, e.employee_name, e.email FROM hw3.employee e 
-                                JOIN hw3.manager_employee me ON e.employee_id = me.employee_id 
-                                WHERE me.manager_id = ?");
+        $stmt = $conn->prepare("
+            SELECT e.employee_id, e.employee_name, e.email 
+            FROM hw3.employee e
+            JOIN hw3.manager_employee me ON e.employee_id = me.employee_id 
+            WHERE me.manager_id = ?
+        ");
         $stmt->bind_param("i", $manager_id);
         $stmt->execute();
         $result = $stmt->get_result();
