@@ -9,11 +9,47 @@ include "view-header.php";
 $employees = selectEmployees();
 ?>
 
-<h1 class="text-center my-4">Employees</h1>
+<!-- Page Background Styling -->
+<style>
+  body {
+    background-color: #f8f9fa; /* Light gray background */
+  }
 
-<!-- Employee Table -->
+  .custom-header {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .custom-table {
+    background-color: white; /* White table background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for the table */
+    padding: 15px;
+  }
+
+  .btn-custom-add {
+    background-color: #28a745; /* Bootstrap success color */
+    color: white;
+  }
+
+  .btn-custom-add:hover {
+    background-color: #218838; /* Darker success color on hover */
+    color: white;
+  }
+</style>
+
 <div class="container">
-  <div class="table-responsive">
+  <!-- Custom Header -->
+  <div class="custom-header">
+    <h1>Employees</h1>
+  </div>
+
+  <!-- Employee Table -->
+  <div class="custom-table">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
@@ -47,7 +83,9 @@ while ($employee = $employees->fetch_assoc()) {
   </div>
 
   <!-- Add Employee Button -->
-  <button class="btn btn-success" onclick="showAddModal()">Add New Employee</button>
+  <div class="text-center mt-4">
+    <button class="btn btn-custom-add" onclick="showAddModal()">Add New Employee</button>
+  </div>
 </div>
 
 <!-- Modals -->
